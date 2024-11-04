@@ -29,25 +29,33 @@ This project is a Volunteer Management System developed as part of Purdue's CS 3
 volunteer-management/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py                # FastAPI entry point
-│   │   ├── database.py            # Database connection and setup
-│   │   ├── models.py              # SQLAlchemy models for events and assignments
-│   │   ├── schemas.py             # Pydantic models for request and response validation
-│   │   ├── crud.py                # CRUD operations for database interactions
-│   │   ├── routers/
-│   │   │   ├── events.py          # Event-related API routes
-│   │   │   ├── assignments.py     # Volunteer assignment-related API routes
-│   │   │   ├── reports.py         # Reporting API routes
-│   └── test.db                    # SQLite database (development)
+│   │   ├── main.py                # FastAPI entry point to start the server and define main app setup
+│   │   ├── database.py            # Database connection setup using SQLAlchemy and session management
+│   │   ├── models.py              # SQLAlchemy models defining tables for events and volunteer assignments
+│   │   ├── schemas.py             # Pydantic models for data validation in API requests and responses
+│   │   ├── crud.py                # CRUD operations handling direct interactions with the database
+│   │   ├── routers/               # Directory for route modules to organize API endpoints
+│   │   │   ├── events.py          # Event-related API routes (add, edit, delete, and retrieve events)
+│   │   │   ├── assignments.py     # Volunteer assignment-related API routes (add, edit, delete assignments)
+│   │   │   ├── reports.py         # Reporting API routes (generate volunteer event participation reports)
+│   └── test.db                    # SQLite database for development and testing
 ├── frontend/
 │   ├── src/
-│   │   ├── components/            # React components for the UI
-│   │   │   ├── EventForm.jsx      # Event creation/editing form
-│   │   │   ├── EventList.jsx      # List of events with edit/delete options
-│   │   │   ├── VolunteerAssignment.jsx # Volunteer assignment form
-│   │   │   ├── VolunteerList.jsx  # List of volunteer assignments with edit/delete options
-│   │   ├── services/              # Axios service files for API requests
-│   │   ├── App.jsx                # Main application component
-│   └── public/
-└── README.md                      # Project README
+│   │   ├── components/            # Directory for reusable React components making up the UI
+│   │   │   ├── EventForm.jsx      # Form component for adding or editing events
+│   │   │   ├── EventList.jsx      # Component for displaying a list of events with edit/delete options
+│   │   │   ├── Reports.jsx        # Component for generating and displaying reports
+│   │   │   ├── VolunteerAssignmentForm.jsx # Form for assigning volunteers to events
+│   │   │   ├── VolunteerList.jsx  # Component for displaying a list of volunteer assignments with edit/delete options
+│   │   ├── services/              # Directory for Axios-based service modules to handle API requests
+│   │   │   ├── api.js             # Main Axios instance configuration for API base URL
+│   │   │   ├── assignmentService.js # API service for volunteer assignment-related operations
+│   │   │   ├── eventService.js    # API service for event-related operations
+│   │   ├── App.jsx                # Main application component that routes between different pages and components
+│   │   ├── App.css                # Main CSS file for styling the application
+│   │   ├── index.js               # Entry point for React application, renders App component
+│   └── public/                    # Directory for static assets (HTML template, icons, etc.)
+├── .gitignore                     # Specifies files and directories to ignore in version control
+├── README.md                      # Project documentation with setup and usage instructions
+└── tailwind.config.js             # Tailwind CSS configuration file for custom styling
 ```
