@@ -1,0 +1,46 @@
+# Python specific ignores
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+.env.*
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+
+# SQLAlchemy database files (SQLite databases)
+*.db
+*.sqlite3
+
+# Virtual environment folder (if you're using a local virtual environment)
+venv/
+.venv/
+
+# VS Code settings
+.vscode/
+*.code-workspace
+
+# Logs and debugging files
+*.log
+*.out
+*.err
+
+# MacOS-specific files
+.DS_Store
+
+# Other editor and IDE specific files
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore migrations and temporary files
+migrations/
+*.bak
+*.swp
+
+# FastAPI specific caches and dependencies
+cache/
+pip-wheel-metadata/

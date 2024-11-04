@@ -1,22 +1,25 @@
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
-from database import engine, Base, get_db
-from crud import create_event, get_events, delete_event
-from schemas import EventCreate, EventOut
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from database import engine, Base
+from routers import events, reports, assignments
 
 app = FastAPI()
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this to specify allowed origins, e.g., ["http://localhost:5173"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 Base.metadata.create_all(bind=engine)
 
-@app.post("/events/", response_model=EventOut)
-def add_event(event: EventCreate, db: Session = Depends(get_db)):
-    return create_event(db, event)
 
-@app.get("/events/", response_model=list[EventOut])
-def read_events(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return get_events(db, skip=skip, limit=limit)
+Base.metadata.create_all(bind=engine)
 
-@app.delete("/events/{event_id}")
-def remove_event(event_id: int, db: Session = Depends(get_db)):
-    delete_event(db, event_id)
-    return {"msg": "Event deleted"}
+# Register the routers
+app.include_router(events.router, prefix="/events")
+app.include_router(reports.router, prefix="/reports")
+app.include_router(assignments.router, prefix="/assignments")
