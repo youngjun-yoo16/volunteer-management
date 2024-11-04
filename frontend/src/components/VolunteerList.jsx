@@ -4,7 +4,7 @@ import api from '../services/api';
 
 function VolunteerList({ onVolunteerDeleted }) {
   const [volunteers, setVolunteers] = useState([]);
-  const [events, setEvents] = useState([]); // New state to store events
+  const [events, setEvents] = useState([]);
   const [editingVolunteer, setEditingVolunteer] = useState(null);
   const [formData, setFormData] = useState({
     volunteer_id: '',
@@ -14,7 +14,7 @@ function VolunteerList({ onVolunteerDeleted }) {
 
   useEffect(() => {
     fetchVolunteers();
-    fetchEvents(); // Fetch events when the component loads
+    fetchEvents();
   }, []);
 
   const fetchVolunteers = async () => {
@@ -29,7 +29,7 @@ function VolunteerList({ onVolunteerDeleted }) {
   const fetchEvents = async () => {
     try {
       const response = await api.get('/events/');
-      setEvents(response.data); // Set events in the state
+      setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -49,7 +49,7 @@ function VolunteerList({ onVolunteerDeleted }) {
     setEditingVolunteer(volunteer.id);
     setFormData({
       volunteer_id: volunteer.volunteer_id,
-      event_id: volunteer.event.id, // Set event ID in form data
+      event_id: volunteer.event ? volunteer.event.id : '', // Handle missing event gracefully
       hours: volunteer.hours,
     });
   };
@@ -59,7 +59,8 @@ function VolunteerList({ onVolunteerDeleted }) {
     try {
       await api.put(`/assignments/${editingVolunteer}`, formData);
       setEditingVolunteer(null); // Close the edit form after saving
-      fetchVolunteers();
+      fetchVolunteers(); // Refresh volunteers to reflect any event name changes
+      setFormData({ volunteer_id: '', event_id: '', hours: '' }); // Clear form data
     } catch (error) {
       console.error('Error updating volunteer assignment:', error);
     }
@@ -77,7 +78,9 @@ function VolunteerList({ onVolunteerDeleted }) {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="font-semibold">Volunteer ID: {volunteer.volunteer_id}</p>
-                  <p className="text-sm text-gray-500">Event: {volunteer.event.name}</p>
+                  <p className="text-sm text-gray-500">
+                    Event: {volunteer.event ? volunteer.event.name : "Event Deleted"}
+                  </p>
                   <p className="text-sm text-gray-500">Hours Worked: {volunteer.hours}</p>
                 </div>
                 <div className="flex space-x-2">
@@ -117,6 +120,9 @@ function VolunteerList({ onVolunteerDeleted }) {
                       onChange={(e) => setFormData({ ...formData, event_id: e.target.value })}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
+                      <option value="" disabled>
+                        Select an Event
+                      </option>
                       {events.map((event) => (
                         <option key={event.id} value={event.id}>
                           {event.name}

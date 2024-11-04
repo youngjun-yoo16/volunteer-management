@@ -50,3 +50,4 @@ volunteer-management/
 │   │   ├── App.jsx                # Main application component
 │   └── public/
 └── README.md                      # Project README
+```

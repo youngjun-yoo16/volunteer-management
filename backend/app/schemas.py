@@ -11,6 +11,12 @@ class EventBase(BaseModel):
 class EventCreate(EventBase):
     pass
 
+class EventUpdate(EventBase):
+    name: Optional[str]
+    date: Optional[date]
+    location: Optional[str]
+    type: Optional[str]
+    
 class EventOut(EventBase):
     id: int
     class Config:
@@ -51,12 +57,11 @@ class AssignmentUpdate(BaseModel):
     class Config:
         orm_mode = True
 
-# Updated AssignmentOut schema to include event name
 class AssignmentOut(BaseModel):
     id: int
     volunteer_id: int
     hours: int
-    event: EventSummary  # Include event name and ID
+    event: Optional[EventSummary] = None  # Make event optional
 
     class Config:
         orm_mode = True

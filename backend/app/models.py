@@ -9,12 +9,14 @@ class Event(Base):
     date = Column(Date)
     location = Column(String)
     type = Column(String)
+    # Set cascade on the relationship with assignments
     assignments = relationship("VolunteerAssignment", back_populates="event", cascade="all, delete-orphan")
 
 class VolunteerAssignment(Base):
     __tablename__ = "volunteer_assignments"
     id = Column(Integer, primary_key=True, index=True)
-    event_id = Column(Integer, ForeignKey("events.id"))
+    # Set cascade delete on the foreign key
+    event_id = Column(Integer, ForeignKey("events.id", ondelete="CASCADE"))
     volunteer_id = Column(Integer)
     hours = Column(Integer)
-    event = relationship("Event", back_populates="assignments")  # Define relationship to Event
+    event = relationship("Event", back_populates="assignments")
