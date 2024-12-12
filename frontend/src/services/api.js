@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000',  // Ensure this is correct
+  baseURL: 'https://volunteer-management-2rku.onrender.com/',  // Ensure this is correct
 });
 
 export default api;
